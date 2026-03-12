@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laser Zip · courier tracking</title>
+    <!-- Font Awesome 6 (free) for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(145deg, #f3f6fc 0%, #eef2f8 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+
+        /* main card – clean, floating, premium */
+        .tracking-card {
+            max-width: 1200px;
+            width: 100%;
+            background-color: #ffffff;
+            border-radius: 2.5rem;
+            box-shadow: 0 30px 60px -10px rgba(18, 52, 77, 0.2), 0 0 0 1px rgba(0, 32, 64, 0.03) inset;
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+
+        /* header with Laser Zip branding */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.5rem 2.5rem;
+            background: white;
+            border-bottom: 1px solid rgba(0, 90, 156, 0.1);
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            background: #003057; /* deep navy */
+            width: 48px;
+            height: 48px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 14px -6px rgba(0, 48, 87, 0.25);
+        }
+
+        .logo-icon i {
+            font-size: 2rem;
+            color: #ffc845; /* energetic gold */
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+
+        .logo-text h1 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: #0b1e33;
+            line-height: 1.2;
+        }
+
+        .logo-text span {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #3b5f8a;
+            letter-spacing: 0.3px;
+            background: #ecf3fa;
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+        }
+
+        .tagline {
+            background: #f0f7ff;
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            color: #003875;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border: 1px solid rgba(0, 88, 163, 0.15);
+        }
+
+        .tagline i {
+            color: #ffb347;
+            margin-right: 8px;
+        }
+
+        /* progress / in transit banner */
+        .live-track {
+            background: #1f3a5f;  /* deep nautical */
+            padding: 1.2rem 2.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            color: white;
+            gap: 1rem;
+        }
+
+        .shipment-status {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .shipment-status .badge {
+            background: #ffc107;
+            color: #1e2f4b;
+            font-weight: 700;
+            padding: 0.4rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            letter-spacing: 0.4px;
+            box-shadow: 0 2px 8px rgba(255,193,7,0.4);
+        }
+
+        .shipment-status .live-icon {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255,255,255,0.15);
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .live-icon i {
+            color: #5bdc7c;
+            font-size: 0.8rem;
+        }
+
+        .estimated {
+            font-size: 1rem;
+            background: rgba(0,0,0,0.1);
+            padding: 0.5rem 1.4rem;
+            border-radius: 50px;
+            border: 1px dashed rgba(255,255,255,0.2);
+        }
+
+        .estimated strong {
+            font-weight: 700;
+            color: #ffde9e;
+        }
+
+        /* main content */
+        .content {
+            padding: 2.5rem;
+        }
+
+        /* location cards — San Jose to Colquitt */
+        .route-summary {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #f9fcff;
+            border-radius: 2rem;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2.8rem;
+            box-shadow: 0 6px 18px -6px rgba(0,65,110,0.08);
+            border: 1px solid #e9f0f8;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .location {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+            max-width: 350px;
+        }
+
+        .location .address {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #0b2b44;
+            line-height: 1.4;
+        }
+
+        .location .city-state {
+            font-size: 1rem;
+            color: #2e4b6e;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+        }
+        
+        .location .detail {
+            font-size: 0.9rem;
+            color: #4d627a;
+            font-weight: 400;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .arrow-route {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #2266a8;
+            font-weight: 600;
+            font-size: 1rem;
+            min-width: 120px;
+        }
+
+        .arrow-route i {
+            font-size: 2.4rem;
+            color: #2e7eb0;
+            opacity: 0.8;
+        }
+
+        .arrow-route .transit-badge {
+            background: #ddf0ff;
+            padding: 0.25rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #005c99;
+            margin-top: 4px;
+            white-space: nowrap;
+        }
+
+        /* tracking progress bar */
+        .progress-section {
+            margin: 2rem 0 1.8rem 0;
+        }
+
+        .step-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            position: relative;
+            flex-wrap: wrap;
+        }
+
+        .step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            min-width: 90px;
+        }
+
+        .step .dot {
+            width: 44px;
+            height: 44px;
+            background: white;
+            border: 3px solid #cbd6e6;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.7rem;
+            color: #7f8fa3;
+            font-weight: 700;
+            background: #f1f6fc;
+            transition: all 0.2s;
+        }
+
+        .step.completed .dot {
+            background: #003e7e;
+            border-color: #003e7e;
+            color: white;
+        }
+
+        .step.active .dot {
+            border-color: #f4b400;
+            background: #fff1d2;
+            color: #b87c00;
+            box-shadow: 0 0 0 6px rgba(244, 180, 0, 0.1);
+        }
+
+        .step .label {
+            font-weight: 600;
+            color: #2e3d54;
+            font-size: 0.95rem;
+        }
+
+        .step .date {
+            font-size: 0.8rem;
+            color: #62748b;
+            margin-top: 5px;
+        }
+
+        .progress-line {
+            position: relative;
+            height: 6px;
+            background: #dfe7f0;
+            border-radius: 10px;
+            margin: 0 20px 10px 20px;
+            top: -28px;
+            z-index: 1;
+        }
+
+        .progress-fill {
+            width: 66%; /* corresponds to "in transit" – approx 2/3 progress */
+            height: 6px;
+            background: linear-gradient(90deg, #003e7e, #2b94e0);
+            border-radius: 10px;
+            position: relative;
+            box-shadow: 0 0 8px #6cb3ff;
+        }
+
+        /* package details grid */
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+            margin: 2.5rem 0 1.8rem;
+        }
+
+        .info-panel {
+            background: #f6faff;
+            border-radius: 1.5rem;
+            padding: 1.4rem 1.6rem;
+            border: 1px solid #e2ebf6;
+            box-shadow: 0 4px 6px -2px rgba(0, 52, 102, 0.03);
+        }
+
+        .info-panel .title {
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            color: #607b9c;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .info-panel .value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #0a2942;
+            margin-bottom: 0.2rem;
+            word-break: break-word;
+        }
+
+        .info-panel .sub {
+            color: #4a6e8f;
+            font-size: 0.9rem;
+            font-weight: 400;
+        }
+
+        .tracking-number {
+            background: #eef4fa;
+            border-radius: 1rem;
+            padding: 0.5rem 1rem;
+            font-family: monospace;
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: #10345e;
+            border: 1px dashed #7fa9d0;
+        }
+
+        /* map placeholder (subtle) */
+        .map-mini {
+            background: #d9e9ff;
+            background-image: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.6) 1px, transparent 1px);
+            background-size: 20px 20px;
+            border-radius: 1.8rem;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1a4870;
+            font-weight: 600;
+            border: 1px solid white;
+            box-shadow: inset 0 2px 8px rgba(0,44,75,0.05);
+            margin-top: 1.8rem;
+            text-align: center;
+            padding: 0 1.5rem;
+        }
+
+        .map-mini i {
+            font-size: 1.4rem;
+            margin-right: 10px;
+            color: #f4b400;
+        }
+
+        .footer-note {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2.2rem;
+            font-size: 0.9rem;
+            color: #4b6f92;
+            border-top: 1px solid #dae6f2;
+            padding-top: 1.2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-note .support i {
+            color: #1f5c99;
+            margin-right: 6px;
+        }
+
+        .footer-note .update {
+            background: #eaf1fb;
+            padding: 0.3rem 1.2rem;
+            border-radius: 30px;
+            font-weight: 500;
+        }
+
+        /* responsive touches */
+        @media (max-width: 800px) {
+            .route-summary {
+                flex-direction: column;
+                text-align: center;
+            }
+            .arrow-route {
+                transform: rotate(90deg);
+            }
+            .header {
+                flex-direction: column;
+                align-items: start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="tracking-card">
+        <!-- header with Laser Zip logo -->
+        <div class="header">
+            <div class="logo-area">
+                <div class="logo-icon">
+                    <i class="fas fa-bolt"></i> <!-- laser / zip energy -->
+                </div>
+                <div class="logo-text">
+                    <h1>LASER ZIP</h1>
+                    <span>COURIER · LOGISTICS</span>
+                </div>
+            </div>
+            <div class="tagline">
+                <i class="fas fa-crosshairs"></i> real-time tracking
+            </div>
+        </div>
+
+        <!-- in transit highlight + live info -->
+        <div class="live-track">
+            <div class="shipment-status">
+                <span class="badge"><i class="fas fa-sync-alt fa-fw"></i> IN TRANSIT</span>
+                <span class="live-icon"><i class="fas fa-circle"></i> LIVE</span>
+            </div>
+            <div class="estimated">
+                <i class="far fa-clock"></i> Estimated delivery: <strong>Thu, Apr 17</strong> by 18:00
+            </div>
+        </div>
+
+        <!-- content body -->
+        <div class="content">
+            <!-- FROM / TO (San Jose → Colquitt) with full addresses -->
+            <div class="route-summary">
+                <div class="location">
+                    <span class="address">2211 North First Street</span>
+                    <span class="city-state"><i class="fas fa-map-pin" style="color:#b3801a;"></i> San Jose, California, 95131</span>
+                    <span class="detail">U.S.A · Shipped Apr 12</span>
+                </div>
+                <div class="arrow-route">
+                    <i class="fas fa-truck"></i>
+                    <i class="fas fa-arrow-right-long" style="font-size: 2rem;"></i>
+                    <span class="transit-badge">en route · 2,100 mi</span>
+                </div>
+                <div class="location" style="text-align: right;">
+                    <span class="address">603 N M.L.K jr st apt 3A</span>
+                    <span class="city-state"><i class="fas fa-flag-checkered" style="color:#1e7e34;"></i> COLQUITT GA. 39837</span>
+                    <span class="detail">USA · delivery estimated Apr 17</span>
+                </div>
+            </div>
+
+            <!-- progress bar step by step (San Jose -> GA) -->
+            <div class="progress-section">
+                <div class="step-indicator">
+                    <div class="step completed">
+                        <div class="dot"><i class="fas fa-check"></i></div>
+                        <div class="label">Picked up</div>
+                        <div class="date">Apr 12, 09:15</div>
+                    </div>
+                    <div class="step completed">
+                        <div class="dot"><i class="fas fa-check"></i></div>
+                        <div class="label">San Jose sort</div>
+                        <div class="date">Apr 12, 14:30</div>
+                    </div>
+                    <div class="step active">
+                        <div class="dot">3</div>
+                        <div class="label">In transit</div>
+                        <div class="date">now · Arizona</div>
+                    </div>
+                    <div class="step">
+                        <div class="dot">4</div>
+                        <div class="label">GA arrival</div>
+                        <div class="date">estimated Apr 16</div>
+                    </div>
+                    <div class="step">
+                        <div class="dot">5</div>
+                        <div class="label">Delivered</div>
+                        <div class="date">—</div>
+                    </div>
+                </div>
+                <!-- connecting line with fill based on transit -->
+                <div class="progress-line">
+                    <div class="progress-fill"></div>
+                </div>
+            </div>
+
+            <!-- detailed info grid with correct addresses and details -->
+            <div class="details-grid">
+                <div class="info-panel">
+                    <div class="title"><i class="far fa-id-card"></i> tracking #</div>
+                    <div class="tracking-number">LZSJC-QLGT-742X</div>
+                    <div class="sub">service: LaserZip Priority</div>
+                </div>
+                <div class="info-panel">
+                    <div class="title"><i class="fas fa-box-open"></i> package</div>
+                    <div class="value">Business documents · 1.2 kg</div>
+                    <div class="sub">Secure envelope · ref #LZ-SJ24</div>
+                </div>
+                <div class="info-panel">
+                    <div class="title"><i class="fas fa-location-dot"></i> last scan</div>
+                    <div class="value">Phoenix, AZ</div>
+                    <div class="sub">regional hub · Apr 14, 11:42</div>
+                </div>
+                <div class="info-panel">
+                    <div class="title"><i class="fas fa-hourglass-half"></i> transit days</div>
+                    <div class="value">2d 5h in transit</div>
+                    <div class="sub">on schedule</div>
+                </div>
+            </div>
+
+            <!-- from / to addresses repeated clearly for confirmation -->
+            <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; background: #f0f7ff; border-radius: 1.5rem; padding: 1.5rem; margin: 1.8rem 0; border: 1px solid #d5e5fa;">
+                <div style="flex: 1; min-width: 200px;">
+                    <div style="font-size: 0.8rem; color: #3f6190; margin-bottom: 0.3rem;"><i class="fas fa-circle-check" style="color: #1f8b4c;"></i> SENDER</div>
+                    <div style="font-weight: 600;">2211 North First Street</div>
+                    <div>San Jose, California, 95131, U.S.A</div>
+                </div>
+                <div style="flex: 1; min-width: 200px;">
+                    <div style="font-size: 0.8rem; color: #3f6190; margin-bottom: 0.3rem;"><i class="fas fa-circle-check" style="color: #1f8b4c;"></i> RECIPIENT</div>
+                    <div style="font-weight: 600;">603 N M.L.K jr st apt 3A</div>
+                    <div>COLQUITT GA. 39837, USA</div>
+                </div>
+            </div>
+
+            <!-- mini map visual with current location -->
+            <div class="map-mini">
+                <i class="fas fa-location-dot"></i> current location: near flagstaff, AZ · en route to georgia
+            </div>
+
+            <!-- footer with support & update -->
+            <div class="footer-note">
+                <div class="support">
+                    <i class="fas fa-headset"></i> Laser Zip support · 1-800-529-3774
+                </div>
+                <div class="update">
+                    <i class="far fa-clock"></i> last updated 2 min ago
+                </div>
+            </div>
+
+            <!-- microcopy with exact addresses as confirmation -->
+            <div style="font-size: 0.75rem; color: #7b94af; margin-top: 0.6rem; text-align: center; border-top: 1px dashed #d2e0f0; padding-top: 1rem;">
+                <i class="fas fa-check-circle" style="color: #2b7d3c;"></i> Package from <strong>2211 North First Street, San Jose, CA 95131</strong> to <strong>603 N M.L.K jr st apt 3A, COLQUITT GA. 39837</strong> · in transit · live updates
+            </div>
+        </div> <!-- end content -->
+    </div> <!-- end tracking-card -->
+</body>
+</html>
